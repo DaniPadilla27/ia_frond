@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../src/environments/environment';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from '../../public/header/header.component';
-import { FormsModule } from '@angular/forms'; // Added FormsModule
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-plantel',
@@ -13,56 +13,83 @@ import { FormsModule } from '@angular/forms'; // Added FormsModule
     CommonModule, 
     RouterModule, 
     HeaderComponent,
-    FormsModule // Added here
-
+    FormsModule
   ],
   templateUrl: './plantel.component.html',
   styleUrls: ['./plantel.component.scss']
 })
-// plantel.component.ts
-export class PlantelComponent {
+export class PlantelComponent implements OnInit {
+  plantelId!: number;
   plantel = {
     nombre: '',
     clave_centro_trabajo: '',
     nivel_educativo: '',
-    grado: { nombre: '' }, // Cambiar a objeto
-    num_alumnos: null,
-    num_docentes: null,
+    grado: { nombre: '' },
+    num_alumnos: null as number | null,
+    num_docentes: null as number | null,
     modalidad: '',
     organizacion: '',
     sostenimiento: '',
-    direccion: { // Debe ser un objeto, no string
+    direccion: {
       calle: '',
       numero: '',
       colonia: '',
       localidad: '',
       municipio: '',
       estado: '',
-      pais: 'México' // Valor por defecto
+      pais: 'México'
     }
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute
+  ) {}
 
-  onSubmit() {
-    // Agregar validación
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.plantelId = params['id'];
+      this.cargarPlantel();
+    });
+  }
+
+  cargarPlantel() {
+    this.http.get(`${environment.api}/api/plantel/8`) // Usar plantelId dinámico
+      .subscribe((data: any) => {
+        this.plantel = {
+          nombre: data.nombre,
+          clave_centro_trabajo: data.clave_centro_trabajo,
+          nivel_educativo: data.nivel_educativo,
+          modalidad: data.modalidad,
+          organizacion: data.organizacion,
+          sostenimiento: data.sostenimiento,
+          num_alumnos: data.num_alumnos,
+          num_docentes: data.num_docentes,
+          direccion: data.direccion, // Usar objeto completo
+          grado: data.grado // Usar objeto completo
+        };
+      });
+  }
+
+  onUpdate() {
     if (this.isFormIncomplete()) {
       alert('Por favor complete todos los campos requeridos');
       return;
     }
-    
-    const apiUrl = `${environment.api}/api/plantel`;
-    this.http.post(apiUrl, this.plantel).subscribe(
-      (response) => {
-        console.log('Plantel registrado con éxito:', response);
-        alert('Plantel registrado exitosamente!');
-      },
-      (error) => {
-        console.error('Error al registrar el plantel:', error);
-        alert(`Error: ${error.error?.message || 'Error con la conexión o puede ser otra cosa'}`);
-      }
-    );
+  
+    this.http.put(`${environment.api}/api/plantel/8`, this.plantel)
+      .subscribe({
+        next: () => {
+          alert('Plantel actualizado exitosamente');
+          this.cargarPlantel(); // Recargar datos actualizados
+        },
+        error: (err) => {
+          console.error('Error al actualizar:', err);
+          alert('Error al actualizar el plantel');
+        }
+      });
   }
+
 
   private isFormIncomplete(): boolean {
     return !this.plantel.nombre || 
