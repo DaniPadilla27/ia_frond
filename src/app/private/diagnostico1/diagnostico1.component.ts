@@ -11,10 +11,10 @@ import { HeaderComponent } from '../../public/header/header.component';
   imports: [CommonModule, FormsModule, HeaderComponent]
 })
 export class Diagnostico1Component {
-  // URL base de la API (se agregará el "/8" en la llamada)
-  apiUrl = 'http://localhost:3000/api/diagnostico1';
+  // URL base de la API para los diagnósticos
+  apiUrl = 'http://localhost:3000/api';
 
-  // Estructura de categorías e indicadores (el usuario solo podrá modificar calificación y observaciones)
+  // Estructura de categorías e indicadores (los usuarios modifican solo calificación y observaciones)
   categorias = [
     {
       nombre: 'Socioeconómico',
@@ -56,11 +56,14 @@ export class Diagnostico1Component {
     }
   ];
 
+  // Propiedad para mostrar el estado de carga y el resultado del diagnóstico generado
+  loading = false;
+  diagnostico1Text = '';
+
   constructor(private http: HttpClient) {}
 
   guardarDiagnostico() {
-    // Se arma un arreglo de objetos que incluye:
-    // plantel_id, categoria, indicador, calificacion y observaciones.
+    // Arma el arreglo de objetos con plantel_id, categoría, indicador, calificación y observaciones.
     const datos = this.categorias.flatMap(categoria =>
       categoria.indicadores.map(indicador => ({
         plantel_id: 8,
@@ -71,8 +74,8 @@ export class Diagnostico1Component {
       }))
     );
 
-    // Enviamos el payload al endpoint: http://localhost:3000/api/diagnostico1/8
-    this.http.put(`${this.apiUrl}/8`, datos).subscribe(
+    // Envía el payload al endpoint PUT para actualizar diagnósticos (si es necesario)
+    this.http.put(`${this.apiUrl}/diagnostico1/8`, datos).subscribe(
       response => {
         console.log('Diagnóstico guardado:', response);
         alert('Diagnóstico guardado con éxito');
@@ -85,9 +88,22 @@ export class Diagnostico1Component {
   }
 
   generarCINIA() {
-    // Lógica para la generación de CIN IA (por el momento, solo muestra un mensaje)
-    console.log('Generando CIN IA...');
-    alert('Generando CIN IA...');
+    // Al tocar el botón, se muestra el mensaje de "Generando..."
+    this.loading = true;
+    this.diagnostico1Text = 'Generando CIN IA...';
+
+    // Se invoca el endpoint POST que genera el diagnóstico (Diagnóstico 1)
+    this.http.post(`${this.apiUrl}/generate-cin-ia/8`, {}).subscribe(
+      (response: any) => {
+        // Al recibir la respuesta, se actualiza el área de texto
+        this.loading = false;
+        this.diagnostico1Text = response.diagnostico1;
+      },
+      error => {
+        console.error('Error al generar CIN IA:', error);
+        this.loading = false;
+        alert('Hubo un error al generar CIN IA');
+      }
+    );
   }
-  
 }

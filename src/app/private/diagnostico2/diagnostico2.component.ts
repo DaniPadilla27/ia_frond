@@ -11,8 +11,15 @@ import { HeaderComponent } from '../../public/header/header.component';
   imports: [CommonModule, FormsModule, HeaderComponent]
 })
 export class Diagnostico2Component {
-  // URL base de la API (se agregará "/8" en la llamada, donde 8 es el plantel_id)
+  // URL base para guardar el diagnóstico
   apiUrl = 'http://localhost:3000/api/diagnostico2';
+
+  // URL para generar el reporte CIN IA para Diagnóstico 2 (endpoint a implementar en el backend)
+  generateUrl = 'http://localhost:3000/api/generate-cin-ia-d2';
+
+  // Variables para mostrar el estado de carga y el reporte generado
+  loading = false;
+  diagnostico2Text = '';
 
   // Estructura de categorías e indicadores para el Diagnóstico 2
   categorias = [
@@ -92,9 +99,24 @@ export class Diagnostico2Component {
       }
     );
   }
+
   generarCINIA() {
-    // Lógica para la generación de CIN IA (por el momento, solo muestra un mensaje)
-    console.log('Generando CIN IA...');
-    alert('Generando CIN IA...');
+    // Muestra mensaje de carga y actualiza el estado
+    this.loading = true;
+    this.diagnostico2Text = 'Generando CIN IA...';
+
+    // Llama al endpoint que genera el reporte para Diagnóstico 2
+    this.http.post(`${this.generateUrl}/8`, {}).subscribe(
+      (response: any) => {
+        // Se espera que la respuesta tenga una propiedad 'diagnostico2'
+        this.loading = false;
+        this.diagnostico2Text = response.diagnostico2;
+      },
+      error => {
+        console.error('Error al generar CIN IA:', error);
+        this.loading = false;
+        alert('Hubo un error al generar CIN IA');
+      }
+    );
   }
 }
