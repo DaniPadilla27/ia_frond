@@ -142,11 +142,6 @@ export class Diagnostico2Component {
 
 
   generaPdf() {
-    if (!this.diagnostico2Text || this.diagnostico2Text.trim() === '') {
-      alert('No hay contenido para generar el reporte.');
-      return;
-    }
-  
     const doc = new jsPDF();
   
     // Agregar título
@@ -158,28 +153,37 @@ export class Diagnostico2Component {
     doc.setFontSize(12);
     doc.text(`Fecha: ${fecha}`, 20, 30);
   
-    // Agregar el contenido del diagnóstico
-    doc.setFontSize(14);
-    doc.text('Diagnóstico Generado:', 20, 40);
+    // Configurar espacio inicial para el contenido
+    let startY = 40;
   
-    // Insertar el texto con ajuste automático
-    doc.setFontSize(12);
-    const lines = doc.splitTextToSize(this.diagnostico2Text, 170); // Ajusta el texto al ancho máximo
+    this.categorias.forEach(categoria => {
+      // Agregar nombre de la categoría
+      doc.setFontSize(14);
+      doc.text(categoria.nombre, 20, startY);
+      startY += 6;
   
-    let startY = 50; // Posición inicial para el texto
-    const maxY = doc.internal.pageSize.height - 20;  // Definir el límite en Y (20px de margen inferior)
+      // Crear tabla de indicadores
+      const tableData = categoria.indicadores.map(indicador => [
+        indicador.nombre,
+        indicador.calificacion !== null ? indicador.calificacion : '',
+        indicador.observaciones
+      ]);
   
-    // Agregar texto con salto de página si es necesario
-    lines.forEach((line: string) => {  // Declarar explícitamente el tipo de 'line' como 'string'
-      if (startY + 10 > maxY) {  // Si el contenido excede el espacio de la página
-        doc.addPage();           // Agregar una nueva página
-        startY = 20;             // Reiniciar la posición de Y para la nueva página
-      }
-      doc.text(line, 20, startY);  // Insertar la línea de texto
-      startY += 10;                // Ajustar la posición para la siguiente línea
+      doc.autoTable({
+        head: [['Indicador', 'Calificación', 'Observaciones']],
+        body: tableData,
+        startY: startY,
+        theme: 'grid',
+        styles: { fontSize: 10 },
+        headStyles: { fillColor: [100, 100, 255] },
+        columnStyles: { 0: { cellWidth: 90 }, 1: { cellWidth: 30 }, 2: { cellWidth: 60 } }
+      });
+  
+      // Ajustar posición para la siguiente categoría
+      startY = doc.autoTable.previous.finalY + 10;
     });
   
-    // Guardar el archivo PDF
+    // Guardar el PDF
     doc.save('diagnostico_escolar_2.pdf');
   }
   
