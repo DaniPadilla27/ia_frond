@@ -1,0 +1,421 @@
+<div class="min-h-screen flex bg-gray-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-[#5ab2da] text-white p-6 space-y-6 shadow-md">
+    <h2 class="text-2xl font-bold">Perfil Docente</h2>
+    <nav>
+      <ul class="space-y-4">
+        <li><a href="#" class="block hover:text-gray-200">Inicio</a></li>
+        <li><a href="#" class="block hover:text-gray-200">Datos Personales</a></li>
+        <li><a href="#" class="block hover:text-gray-200">Materias Asignadas</a></li>
+        <li><a href="#" class="block hover:text-gray-200">Horarios</a></li>
+        <li><a href="#" class="block hover:text-gray-200">Configuración</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="bg-[#5ab2da] p-6 text-white">
+        <h2 class="text-2xl font-bold">Datos del Plantel</h2>
+        <p class="text-white/80 text-sm mt-1">Formulario de diagnóstico</p>
+      </div>
+      <div class="p-6">
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <h3 class="text-xl font-semibold text-gray-700">Información del Plantel</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+            <div class="bg-white p-3 rounded shadow">
+              <p class="text-gray-600 text-sm"><strong>Nombre:</strong></p>
+              <p class="text-gray-800 font-medium">{{ plantel.nombre }}</p>
+            </div>
+            <div class="bg-white p-3 rounded shadow">
+              <p class="text-gray-600 text-sm"><strong>Dirección:</strong></p>
+              <p class="text-gray-800 font-medium">{{ plantel.direccion.calle }}</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+<!-- Planeación de Actividades -->
+<!-- Contenedor Principal -->
+<div class="p-4 max-w-5xl mx-auto grid grid-cols-2 gap-6">
+  <!-- Sección de Selección -->
+  <div class="col-span-2">
+    <h2 class="text-2xl font-bold mb-4 text-center">📌 Planeación de Actividades</h2>
+
+    <!-- Categorías -->
+    <h3 class="text-lg font-semibold mb-2">Selecciona una categoría:</h3>
+    <div class="grid grid-cols-2 gap-4">
+      <button 
+        *ngFor="let categoria of categorias" 
+        (click)="seleccionarCategoria(categoria.id)" 
+        class="p-4 rounded-lg shadow-md text-white text-center transition"
+        [ngStyle]="{ 'background-color': categoria.color }"
+      >
+        {{ categoria.nombre }}
+      </button>
+    </div>
+
+    <!-- Subtemas (se muestran solo si hay una categoría seleccionada) -->
+    <div *ngIf="subtemasFiltrados.length > 0" class="mt-6">
+      <h3 class="text-lg font-semibold mb-2">Selecciona un subtema:</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <button 
+          *ngFor="let subtema of subtemasFiltrados" 
+          (click)="seleccionarSubtema(subtema)" 
+          class="p-4 rounded-lg shadow-md text-white text-center transition"
+          [ngStyle]="{ 'background-color': categoriaSeleccionada?.color }"
+        >
+          {{ subtema.nombre }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Panel lateral de Selección -->
+</div>
+
+
+<div class="proceso-container" *ngIf="procesoAprendizaje">
+  <h2 
+    class="p-3 text-white text-center rounded-md"
+    [ngStyle]="{ 'background-color': categoriaSeleccionada?.color }"
+  >
+    {{ procesoAprendizaje.nombre_categoria }} - {{ procesoAprendizaje.nombre_subtema }}
+  </h2>
+
+  <div class="niveles-container">
+    <div *ngFor="let nivel of procesoAprendizaje.niveles" class="nivel-card border shadow-md rounded-md overflow-hidden">
+      <div 
+        class="nivel-header p-2 text-white rounded-t-md font-semibold"
+        [ngStyle]="{ 'background-color': categoriaSeleccionada?.color }"
+      >
+        <h3>🔹 Nivel {{ nivel.grado }}</h3>
+      </div>
+      <div class="nivel-content p-4 bg-gray-100">
+        <ul class="list-disc pl-5 text-gray-700">
+          <li *ngFor="let punto of transformarDescripcion(nivel.descripcion)"
+          (click)="seleccionarPunto(punto, nivel?.grado)" 
+          [class.selected]="punto === puntoSeleccionado"
+              class="cursor-pointer hover:bg-gray-200 p-2 rounded-md">
+            {{ punto }}.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección para mostrar el punto seleccionado -->
+  <div *ngIf="puntoSeleccionado" class="punto-seleccionado bg-blue-100 p-4 mt-4 border-l-4 border-blue-500">
+    <h3 class="text-blue-700 font-semibold">Punto Seleccionado:</h3>
+    <p class="text-gray-800">{{ puntoSeleccionado }}.</p>
+  </div>
+</div>
+
+
+
+
+<div *ngIf="!procesoAprendizaje" class="warning-message">
+  <p>Seleccione una categoría y un subtema para ver los niveles de aprendizaje.</p>
+</div>
+
+
+
+<!-- Nueva sección: Elección de Metodología -->
+<!-- Contenedor principal para centrar y agregar márgenes en los lados -->
+<div class="metodologia-container mx-auto mt-6 mb-6 p-6 bg-white shadow-lg rounded-lg max-w-3xl mx-4 border border-gray-200">
+  <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+    📚 Elección de la metodología a trabajar
+  </h3>
+  <p class="text-gray-600">Seleccione una de las siguientes metodologías:</p>
+
+  <ul class="mt-4 space-y-3">
+    <li *ngFor="let metodologia of metodologias"
+        (click)="seleccionarMetodologia(metodologia)" 
+        [class.selected]="metodologia === metodologiaSeleccionada"
+        class="cursor-pointer bg-gray-100 hover:bg-blue-200 transition-all duration-200 p-4 rounded-lg border border-gray-300 text-gray-700 flex items-center gap-3 shadow-md">
+      <span class="text-blue-500 text-xl">✔</span> 
+      <span class="font-medium">{{ metodologia }}</span>
+    </li>
+  </ul>
+</div>
+
+<!-- Sección para mostrar la metodología seleccionada -->
+<!-- <div *ngIf="metodologiaSeleccionada" 
+     class="metodologia-seleccionada bg-green-50 p-5 mt-5 border-l-4 border-green-600 rounded-lg shadow-md mx-4 md:mx-10">
+  <h3 class="text-green-700 font-semibold flex items-center">✅ Metodología Seleccionada:</h3>
+  <p class="text-gray-700 text-lg mt-1 font-medium">{{ metodologiaSeleccionada }}</p>
+</div> -->
+<!-- Sección para mostrar la metodología seleccionada -->
+<div *ngIf="metodologiaSeleccionada" class="metodologia-seleccionada bg-green-100 p-4 mt-4 border-l-4 border-green-500">
+  <h3 class="text-green-700 font-semibold">Metodología Seleccionada:</h3>
+  <p class="text-gray-800">{{ metodologiaSeleccionada }}</p>
+</div>
+
+
+<div class="metodologia-container mx-auto mt-6 mb-6 p-6 bg-white shadow-lg rounded-lg max-w-3xl mx-4 border border-gray-200">
+  <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+    📊 Selección de instrumento de evaluación
+  </h3>
+  <p class="text-gray-600">El docente selecciona el tipo de evaluación a implementar:</p>
+
+  <!-- Tarjetas de instrumentos -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-5">
+    <div *ngFor="let instrumento of instrumentosEvaluacion"
+         (click)="seleccionarInstrumento(instrumento)" 
+         [class.selected]="instrumento === instrumentoSeleccionado"
+         class="cursor-pointer bg-gray-100 hover:bg-purple-200 transition-all duration-200 p-4 rounded-lg border border-gray-300 text-gray-700 flex items-center gap-3 shadow-md">
+      <span class="text-purple-500 text-xl">🎯</span> 
+      <span class="font-medium">{{ instrumento }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Instrumento seleccionado -->
+<!-- <div *ngIf="instrumentoSeleccionado" 
+
+     class="instrumento-seleccionado bg-purple-50 p-5 mt-5 border-l-4 border-purple-600 rounded-lg shadow-md mx-4 md:mx-10">
+  <h3 class="text-purple-700 font-semibold flex items-center">✅ Instrumento de Evaluación Seleccionado:</h3>
+  <p class="text-gray-700 text-lg mt-1 font-medium">{{ instrumentoSeleccionado }}</p>
+</div> -->
+
+<div *ngIf="instrumentoSeleccionado" class="instrumento-seleccionado bg-purple-100 p-4 mt-4 border-l-4 border-purple-500">
+  <h3 class="text-purple-700 font-semibold">Instrumento de Evaluación Seleccionado:</h3>
+  <p class="text-gray-800">{{ instrumentoSeleccionado }}</p>
+</div>
+
+
+
+
+
+
+
+    <!-- Dropdown para seleccionar la periodicidad -->
+<!-- Contenedor Principal Centrando el Select -->
+<!-- Dropdown para seleccionar la periodicidad -->
+<!-- Contenedor Principal Centrando el Select -->
+<div class="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-100 via-indigo-200 to-purple-300">
+  <div class="w-full max-w-lg bg-white p-8 rounded-xl shadow-2xl">
+    <label for="periodoSelect" class="block text-2xl font-bold text-gray-800 mb-4 text-center">
+      📅 Seleccione una periodicidad 
+    </label>
+
+    <!-- Select de Periodicidad -->
+    <div class="relative mb-6">
+      <span class="absolute inset-y-0 left-3 flex items-center text-blue-500 text-lg">📆</span>
+      <select id="periodoSelect" (change)="seleccionarPeriodicidad($event)"
+        class="w-full pl-10 pr-4 py-3 text-lg border-2 border-blue-500 rounded-lg bg-white text-gray-800 shadow-md">
+        <option value="" disabled selected>🔽 Selecciona una periodicidad</option>
+        <option *ngFor="let opcion of opcionesPeriodicidad" [value]="opcion | json">
+          {{ opcion.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Select de Trimestres (Solo si se ha seleccionado una periodicidad) -->
+    <div *ngIf="selectedPeriodo">
+      <label class="block text-xl font-semibold text-gray-700 mb-3">📆 Seleccione un trimestre</label>
+      <div class="grid gap-4">
+        <button *ngFor="let trimestre of selectedPeriodo.trimestres" (click)="seleccionarTrimestre(trimestre)"
+          class="p-4 border rounded-lg bg-gray-200 hover:bg-blue-300 transition-all">
+          {{ trimestre.nombre }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Mostrar Trimestre Seleccionado -->
+    <div *ngIf="selectedTrimestre" class="mt-6">
+      <h3 class="text-3xl font-extrabold text-blue-700 text-center border-b-4 border-blue-500 pb-3 mb-4">
+        {{ selectedTrimestre.nombre }}
+      </h3>
+
+      <div *ngIf="selectedTrimestre.quincenas">
+        <p *ngFor="let quincena of selectedTrimestre.quincenas" class="text-gray-800 font-medium">
+          ✅ {{ quincena.nombre }}
+        </p>
+      </div>
+      
+      <div *ngIf="selectedTrimestre.meses">
+        <p *ngFor="let mes of selectedTrimestre.meses" class="text-gray-800 font-medium">
+          ✅ {{ mes.nombre }}
+        </p>
+      </div>
+    </div>
+<!-- Cantidad de Actividades -->
+
+
+<div *ngIf="selectedPeriodo" class="mt-6">
+  <label for="cantidadActividades" class="block text-xl font-semibold text-gray-700 mb-2">
+    🎯 Cantidad de actividades
+  </label>
+  <input id="cantidadActividades" type="number" [(ngModel)]="cantidadActividades" min="1"
+    class="w-full border-2 border-gray-300 p-3 rounded-lg text-lg text-gray-800 shadow-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+</div>
+
+<!-- Botón de Guardar -->
+<div class="mt-6 text-center">
+  <button (click)="guardarConfiguracion()"
+    class="bg-blue-600 text-white text-lg font-bold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-all">
+    📄 Resumen General
+  </button>
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+    </div>
+  </main>
+</div>
+
+
+
+
+
+
+
+<!-- Modal de Resumen General -->
+<div *ngIf="mostrarModal_generral" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
+  <div class="bg-white w-full max-w-screen-xl h-auto max-h-[80vh] overflow-y-auto p-6 rounded-lg shadow-lg relative">
+    
+    <!-- Título del Modal -->
+    <h2 class="text-2xl font-bold text-center mb-4">📄 Resumen General</h2>
+
+    <!-- Sección del Plantel -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold border-b pb-2">🏫 Plantel</h3>
+      <div class="grid grid-cols-2 gap-3 mt-2">
+        <p><strong>Nombre:</strong> {{ plantel.nombre }}</p>
+        <p><strong>Clave:</strong> {{ plantel.clave_centro_trabajo }}</p>
+        <p><strong>Nivel:</strong> {{ plantel.nivel_educativo }}</p>
+        <p><strong>Grado:</strong> {{ plantel.grado.nombre }}</p>
+        <p><strong>Alumnos:</strong> {{ plantel.num_alumnos }}</p>
+        <p><strong>Docentes:</strong> {{ plantel.num_docentes }}</p>
+        <p class="col-span-2"><strong>Modalidad:</strong> {{ plantel.modalidad }}</p>
+      </div>
+    </div>
+
+    <!-- Sección de Configuración -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold border-b pb-2">📌 Configuración</h3>
+      <div class="grid grid-cols-2 gap-3 mt-2">
+        <p><strong>Categoría:</strong> {{ categoriaSeleccionada?.nombre }}</p>
+        <p><strong>Subtema:</strong> {{ subtemaSeleccionado?.nombre }}</p>
+        <p><strong>Proceso Aprendizaje:</strong> {{ procesoAprendizaje?.nombre_categoria }}</p>
+        <p><strong>Metodología:</strong> {{ metodologiaSeleccionada }}</p>
+        <p><strong>Instrumento Evaluación:</strong> {{ instrumentoSeleccionado }}</p>
+        <p class="col-span-2"><strong>Periodicidad:</strong> {{ selectedPeriodo | json }}</p>
+        <p class="col-span-2"><strong>Trimestre:</strong> {{ selectedTrimestre | json }}</p>
+        <p class="col-span-2"><strong>Actividades:</strong> {{ cantidadActividades }}</p>
+      </div>
+    </div>
+
+    <!-- Diagnósticos -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold border-b pb-2">📑 Diagnósticos</h3>
+      <div class="mt-2">
+        <p><strong>Diagnóstico 1:</strong></p>
+        <p class="truncate">{{ diagnostico1?.descripcion | slice:0:150 }}...</p>
+        <button class="text-blue-600 hover:underline mt-1" (click)="verDiagnosticoCompleto(1)">Ver más</button>
+
+        <p class="mt-3"><strong>Diagnóstico 2:</strong></p>
+        <p class="truncate">{{ diagnostico2?.descripcion | slice:0:150 }}...</p>
+        <button class="text-blue-600 hover:underline mt-1" (click)="verDiagnosticoCompleto(2)">Ver más</button>
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+      <button (click)="generarActividad()" 
+        class="bg-green-600 text-white py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition-all w-full md:w-auto">
+        🚀 Generar Actividad
+      </button>
+      <button class="bg-gray-600 text-white py-3 px-6 rounded-lg shadow-md hover:bg-gray-700 transition-all w-full md:w-auto" 
+        (click)="cerrarModal()">
+        ✖ Cerrar
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+<!-- <div>
+  <h3>Datos seleccionados</h3>
+  <p><strong>Plantel:</strong> {{ plantel.nombre }}</p>
+  <p><strong>Categoría seleccionada:</strong> {{ categoriaSeleccionada?.nombre }}</p>
+  <p><strong>Subtema seleccionado:</strong> {{ subtemaSeleccionado?.nombre }}</p>
+  <p><strong>Proceso de Aprendizaje:</strong> {{ procesoAprendizaje?.nombre_categoria }}</p>
+  <p><strong>Punto seleccionado:</strong> {{ puntoSeleccionado }}</p>
+  <p><strong>Metodología:</strong> {{ metodologiaSeleccionada }}</p>
+  <p><strong>Instrumento de evaluación:</strong> {{ instrumentoSeleccionado }}</p>
+  <p><strong>Periodicidad:</strong> {{ selectedPeriodo?.nombre }}</p>
+  <p>Trimestre: {{ selectedTrimestre | json }}</p>
+  <p><strong>Cantidad de actividades:</strong> {{ cantidadActividades }}</p>
+
+  <p><strong>ID de Categoría:</strong> {{ _categoriaId }}</p>
+  <p><strong>ID de Subtema:</strong> {{ _subtemaId }}</p>
+  <p><strong>Descripción:</strong> {{ _descripcion }}</p>
+</div> -->
+
+
+<!-- <button (click)="guardarConfiguracion()">Guardar Configuración</button> -->
+<!-- <div *ngIf="mostrar_genrado" class="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50 bg-gray-800">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-3/4 md:w-1/2">
+    <h2 class="text-xl font-semibold mb-4">Actividad Generada</h2>
+    <p>{{ actividadGenerada }}</p>
+    <div class="mt-4 text-right">
+      <button (click)="mostrar_genrado=false" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-all">
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div> -->
+<!-- Modal con actividad generada -->
+<div *ngIf="mostrar_genrado" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-4/5 lg:w-3/4 xl:w-2/3 max-h-screen overflow-auto">
+    <h2 class="text-2xl font-semibold mb-4 text-center">Reporte General de Diagnóstico Educativo</h2>
+
+    <div *ngIf="cargando" class="flex justify-center mb-4">
+      <div class="spinner"></div>
+    </div>
+    
+    <div id="contenido-generado" *ngIf="!cargando" [innerHTML]="safeActividadGenerada" class="prose max-w-none"></div>
+
+    <!-- Botones -->
+    <div class="mt-4 flex justify-end gap-4">
+      <button (click)="mostrar_genrado=false" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-all">
+        Cerrar
+      </button>
+      <button (click)="generarPDF()" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-all">
+        Generar PDF
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+

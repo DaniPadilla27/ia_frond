@@ -1,0 +1,45 @@
+{
+    "procesos_desarrollo_aprendizaje": [
+      {
+        "id_categoria": 1,
+        "nombre_categoria": "Lenguajes",
+        "id_subtema": 101,
+        "nombre_subtema": "Comunicación oral",
+        "niveles": [
+          {
+            "grado": 1,
+            "descripcion": "Expresar necesidades, ideas, emociones y gustos que reflejan su forma de interpretar y actuar en el mundo. Reconoce que cuando juega y socializa con sus pares, se expresan desde sus posibilidades, vivencias y cultura. Espera su turno al participar en una conversación con sus compañeras o compañeros."
+          },
+          {
+            "grado": 2,
+            "descripcion": "Escucha con atención a sus pares y espera su turno para hablar. Se interesa por lo que otras personas expresan, sienten y saben e intercambia sus puntos de vista."
+          },
+          {
+            "grado": 3,
+            "descripcion": "Comprende, al interactuar con las demás personas, que existen diversas formas de comunicarse. Conversa y opina sobre diferentes temas y con varias personas interlocutoras."
+          }
+        ]
+      },
+      {
+        "id_categoria": 1,
+        "nombre_categoria": "Lenguajes",
+        "id_subtema": 102,
+        "nombre_subtema": "Narración de historias",
+        "niveles": [
+          {
+            "grado": 1,
+            "descripcion": "Evoca y narra fragmentos de diferentes textos literarios -leyendas, cuentos, fábulas, historias-, y relatos de la comunidad, que escuchan en voz de otras personas que las narran o leen. Comparte las emociones que le provocan. Describe lugares o personajes de las historias o textos literarios."
+          },
+          {
+            "grado": 2,
+            "descripcion": "Lee con apoyo y narra con una secuencia lógica, diferentes textos literarios como leyendas, cuentos, fábulas, historias, y relatos de la comunidad, en las que aprecia otras formas de vida, de pensamiento y de comportamiento. Narra con secuencia lógica, historias que conoce o inventa, y las acompaña con imágenes."
+          },
+          {
+            "grado": 3,
+            "descripcion": "Narra historias que inventa considerando los momentos de inicio, desarrollo y final, de manera individual o colectiva. Describe detalles de personajes y lugares, los comparte con sus pares para evocarlos y enriquecerlos, e incorpora nuevos elementos a partir de los rasgos de su cultura."
+          }
+        ]
+      }
+    ]
+  }
+  
