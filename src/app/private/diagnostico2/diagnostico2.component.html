@@ -1,44 +1,43 @@
-<div class="min-h-screen">
+<div class="min-h-screen bg-gray-50">
   <!-- Header fijo -->
-  <app-header
-    class="fixed left-0 top-0 h-screen w-64 bg-white z-10 shadow-xl"
-  ></app-header>
+  <app-header class="fixed left-0 top-0 h-screen w-64 bg-white z-10 shadow-xl"></app-header>
 
   <!-- Contenido principal con margen izquierdo -->
   <div class="ml-64 h-screen overflow-y-auto">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="bg-white shadow-lg rounded-xl overflow-hidden">
         <!-- Encabezado -->
-        <div class="bg-gradient-to-r from-[#5ab2da] to-[#4a9ec4] px-6 py-4">
+        <div class="bg-gradient-to-r from-[#5ab2da] to-[#4a9ec4] px-6 py-4 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- Ícono representativo -->
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 00-4-4H3m16 6v-2a4 4 0 014-4h2m-4-6V3m0 0H5m14 0h2" />
+          </svg>
           <h2 class="text-2xl font-bold text-white">Diagnóstico Escolar 2</h2>
         </div>
 
         <!-- Formulario con validaciones -->
-        <form
-          #diagnosticoForm="ngForm"
-          class="p-6"
-          (submit)="guardarDiagnostico()"
-        >
+        <form #diagnosticoForm="ngForm" class="p-6" (submit)="guardarDiagnostico()">
           <div class="space-y-6">
-            <ng-container
-              *ngFor="let categoria of categorias; let catIndex = index"
-            >
+            <ng-container *ngFor="let categoria of categorias; let catIndex = index">
               <div class="border p-4 rounded-lg">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <!-- Ícono representativo de categoría -->
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7l9-4 9 4-9 4-9-4z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10l-9 4-9-4" />
+                  </svg>
                   {{ categoria.nombre }}
                 </h3>
 
                 <div class="space-y-4">
-                  <ng-container
-                    *ngFor="
-                      let indicador of categoria.indicadores;
-                      let indIndex = index
-                    "
-                  >
-                    <div
-                      class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
-                    >
-                      <div class="w-full md:w-1/3 text-gray-700">
+                  <ng-container *ngFor="let indicador of categoria.indicadores; let indIndex = index">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                      <!-- Nombre del indicador con ícono -->
+                      <div class="w-full md:w-1/3 text-gray-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <!-- Ícono de información -->
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 20.5a8.38 8.38 0 01-3.21-.72 8.5 8.5 0 1110.42 0 8.38 8.38 0 01-3.21.72" />
+                        </svg>
                         {{ indicador.nombre }}
                       </div>
 
@@ -54,19 +53,10 @@
                           placeholder="Calificación (0-10)"
                           class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#5ab2da]"
                           #calificacion="ngModel"
-                          [class.border-red-500]="
-                            calificacion.invalid &&
-                            (calificacion.dirty || calificacion.touched)
-                          "
+                          [class.border-red-500]="calificacion.invalid && (calificacion.dirty || calificacion.touched)"
                         />
                         <!-- Mensaje de error -->
-                        <div
-                          *ngIf="
-                            calificacion.invalid &&
-                            (calificacion.dirty || calificacion.touched)
-                          "
-                          class="text-red-500 text-sm mt-1"
-                        >
+                        <div *ngIf="calificacion.invalid && (calificacion.dirty || calificacion.touched)" class="text-red-500 text-sm mt-1">
                           Campo requerido (0-10)
                         </div>
                       </div>
@@ -81,19 +71,10 @@
                           placeholder="Observaciones"
                           class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#5ab2da]"
                           #observacion="ngModel"
-                          [class.border-red-500]="
-                            observacion.invalid &&
-                            (observacion.dirty || observacion.touched)
-                          "
+                          [class.border-red-500]="observacion.invalid && (observacion.dirty || observacion.touched)"
                         />
                         <!-- Mensaje de error -->
-                        <div
-                          *ngIf="
-                            observacion.invalid &&
-                            (observacion.dirty || observacion.touched)
-                          "
-                          class="text-red-500 text-sm mt-1"
-                        >
+                        <div *ngIf="observacion.invalid && (observacion.dirty || observacion.touched)" class="text-red-500 text-sm mt-1">
                           Campo requerido
                         </div>
                       </div>
@@ -112,7 +93,7 @@
               class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               [disabled]="!diagnosticoForm.form.valid"
             >
-              Generar CIN IA
+              Generar CON IA
             </button>
             <button
               type="submit"
@@ -125,30 +106,41 @@
         </form>
 
         <!-- Sección para mostrar el resultado del reporte generado por CIN IA -->
-        <div class="p-6">
-          <h3 class="text-xl font-semibold mb-2">Resultado de CIN IA:</h3>
+        <div class="p-6 border-t">
+          <h3 class="text-xl font-semibold mb-2 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <!-- Ícono de resultado o informe -->
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5l2 2h5a2 2 0 012 2v14a2 2 0 01-2 2z" />
+            </svg>
+            Resultado de CON IA:
+          </h3>
           <textarea
             class="w-full h-64 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#5ab2da]"
-            [readonly]="true"
+            readonly
             [value]="diagnostico2Text"
-          >
-          </textarea>
+          ></textarea>
           <!-- Indicador de carga -->
-          <div *ngIf="loading" class="text-blue-600 mt-2">
-            Generando CIN IA...
+          <div *ngIf="loading" class="text-blue-600 mt-2 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="animate-spin h-5 w-5 mr-2 text-blue-600" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+            Generando CON IA...
           </div>
         </div>
       </div>
 
       <!-- Botón para generar el reporte en PDF -->
-      <button 
-        type="button"
-        (click)="generaPdf()"
-        
-        class="bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-md shadow-lg"
+      <div class="mt-4 flex justify-end">
+        <button 
+          type="button"
+          (click)="generaPdf()"
+          class="bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-md shadow-lg transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+          [disabled]="!diagnostico2Text || diagnostico2Text.trim() === ''"
         >
-        Generar Reporte PDF <i class="ml-2 fas fa-file-pdf"></i>
-      </button>
+          Generar Reporte PDF <i class="ml-2 fas fa-file-pdf"></i>
+        </button>
+      </div>
     </div>
   </div>
 </div>
