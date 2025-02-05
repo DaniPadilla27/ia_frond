@@ -3,6 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../public/header/header.component';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable'; // Asegúrate de importar la extensión autoTable
+
+
+declare module "jspdf" {
+  interface jsPDF {
+    autoTable: any;
+  }
+}
 
 @Component({
   selector: 'app-diagnostico1',
@@ -106,4 +115,52 @@ export class Diagnostico1Component {
       }
     );
   }
+
+
+
+  generaPdf() {
+    if (!this.diagnostico1Text || this.diagnostico1Text.trim() === '') {
+      alert('No hay contenido para generar el reporte.');
+      return;
+    }
+  
+    const doc = new jsPDF();
+  
+    // Agregar título
+    doc.setFontSize(18);
+    doc.text('Reporte de Diagnóstico Escolar 1', 20, 20);
+  
+    // Agregar fecha
+    const fecha = new Date().toLocaleDateString();
+    doc.setFontSize(12);
+    doc.text(`Fecha: ${fecha}`, 20, 30);
+  
+    // Agregar el contenido del diagnóstico
+    doc.setFontSize(14);
+    doc.text('Diagnóstico Generado:', 20, 40);
+  
+    // Insertar el texto con ajuste automático
+    doc.setFontSize(12);
+    const lines = doc.splitTextToSize(this.diagnostico1Text, 170); // Ajusta el texto al ancho máximo
+  
+    let startY = 50; // Posición inicial para el texto
+    const maxY = doc.internal.pageSize.height - 20;  // Definir el límite en Y (20px de margen inferior)
+  
+    // Agregar texto con salto de página si es necesario
+    lines.forEach((line: string) => {  // Declarar explícitamente el tipo de 'line' como 'string'
+      if (startY + 10 > maxY) {  // Si el contenido excede el espacio de la página
+        doc.addPage();           // Agregar una nueva página
+        startY = 20;             // Reiniciar la posición de Y para la nueva página
+      }
+      doc.text(line, 20, startY);  // Insertar la línea de texto
+      startY += 10;                // Ajustar la posición para la siguiente línea
+    });
+  
+    // Guardar el archivo PDF
+    doc.save('diagnostico_escolar_1.pdf');
+  }
+  
+  
+  
+
 }
