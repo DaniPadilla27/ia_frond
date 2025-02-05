@@ -12,6 +12,11 @@ export const routes: Routes = [
       import('./private/plantel/plantel.component').then((m) => m.PlantelComponent),
   },
   {
+    path: 'docente',
+    loadComponent: () =>
+      import('./private/docete/docente.component').then((m) => m.DocenteComponent),
+  },
+  {
     path: 'diagnostico1',
     loadComponent: () =>
       import('./private/diagnostico1/diagnostico1.component').then((m) => m.Diagnostico1Component),

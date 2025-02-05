@@ -1,0 +1,93 @@
+{
+  "categorias": [
+    {
+      "id": 1,
+      "nombre": "Lenguajes",
+      "subtemas": [
+        {
+          "id": 101,
+          "nombre": "Comunicación oral",
+          "descripcion": "Expresión de necesidades, emociones, gustos, ideas y saberes, a través de los diversos lenguajes, desde una perspectiva comunitaria."
+        },
+        {
+          "id": 102,
+          "nombre": "Narración de historias",
+          "descripcion": "Narración de historias mediante diversos lenguajes para fortalecer la identidad cultural."
+        },
+        {
+          "id": 103,
+          "nombre": "Recursos y juegos del lenguaje",
+          "descripcion": "Recursos y juegos que fortalecen la diversidad lingüística, fomentando la expresión oral y la conservación de las lenguas de la comunidad."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "Saberes y Pensamiento Científico",
+      "subtemas": [
+        {
+          "id": 201,
+          "nombre": "Diversidad natural",
+          "descripcion": "Exploración de la diversidad natural que existe en la comunidad y en otros lugares."
+        },
+        {
+          "id": 202,
+          "nombre": "Saberes familiares y comunitarios",
+          "descripcion": "Saberes familiares y comunitarios que resuelven situaciones y necesidades en el hogar y la comunidad."
+        },
+        {
+          "id": 203,
+          "nombre": "Seres vivos y fenómenos naturales",
+          "descripcion": "Elementos, procesos y fenómenos naturales que ofrecen oportunidades para entender y explicar hechos cotidianos desde distintas perspectivas."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "Ética, Naturaleza y Sociedades",
+      "subtemas": [
+        {
+          "id": 301,
+          "nombre": "Interacción con la naturaleza",
+          "descripcion": "Interacción, cuidado, conservación y regeneración de la naturaleza, que favorece la construcción de una conciencia socio-ambiental."
+        },
+        {
+          "id": 302,
+          "nombre": "Transformación responsable del entorno",
+          "descripcion": "Transformación responsable del entorno al satisfacer necesidades básicas de alimentación, vestido y vivienda."
+        },
+        {
+          "id": 303,
+          "nombre": "Identidad y pertenencia",
+          "descripcion": "Construcción de la identidad y pertenencia a una comunidad y país, a partir del conocimiento de su historia, celebraciones, conmemoraciones y patrimonio artístico y cultural."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "nombre": "De lo Humano y lo Comunitario",
+      "subtemas": [
+        {
+          "id": 401,
+          "nombre": "Construcción de la identidad personal",
+          "descripcion": "Construcción de la identidad personal a partir de su pertenencia a un territorio, su origen étnico, cultural y lingüístico, y la interacción con personas cercanas."
+        },
+        {
+          "id": 402,
+          "nombre": "Habilidades motrices",
+          "descripcion": "Ejercicios y actividades para favorecer las habilidades motrices en diferentes espacios."
+        },
+        {
+          "id": 403,
+          "nombre": "Precisión y coordinación",
+          "descripcion": "Precisión y coordinación en los movimientos al usar objetos, herramientas y materiales, de acuerdo con sus condiciones, capacidades y características."
+        },
+        {
+          "id": 404,
+          "nombre": "Emociones en la interacción",
+          "descripcion": "Las emociones en la interacción con diversas personas y situaciones, fomentando la convivencia armónica."
+        }
+      ]
+    }
+  ]
+}

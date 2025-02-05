@@ -23,12 +23,23 @@ export class LoginComponent {
     const validEmail = 'jose.vasconcelos@mail.com';
     const validPassword = '123456';
 
+
+
+    // Datos de usuario simulados
+    const validEmail_docente = 'jose.vasconcelos.docente@mail.com';
+    const validPassword_docente = '123456';
+    
     if (this.email === validEmail && this.password === validPassword) {
+      
       // Login exitoso: redirige a la vista del plantel
       this.errorMessage = '';
       this.router.navigate(['/plantel']);
-    } else {
+    } else if (this.email === validEmail_docente && this.password === validPassword_docente) {
+      alert("docente")
       // Credenciales incorrectas
+      this.router.navigate(['/docente']);
+      // this.errorMessage = 'Credenciales incorrectas. Intenta de nuevo.';
+    }else{
       this.errorMessage = 'Credenciales incorrectas. Intenta de nuevo.';
     }
   }

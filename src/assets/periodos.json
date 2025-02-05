@@ -1,0 +1,121 @@
+{
+    "fase": 6,
+    "titulo": "Selección de la periodicidad a trabajar cada proyecto",
+    "opciones": [
+      {
+        "id": 1,
+        "nombre": "Quincenal",
+        "trimestres": [
+          {
+            "id": 11,
+            "nombre": "1er trimestre",
+            "quincenas": [
+              {"id": 111, "nombre": "1ª quincena"},
+              {"id": 112, "nombre": "2ª quincena"},
+              {"id": 113, "nombre": "3ª quincena"},
+              {"id": 114, "nombre": "4ª quincena"},
+              {"id": 115, "nombre": "5ª quincena"},
+              {"id": 116, "nombre": "6ª quincena"}
+            ]
+          },
+          {
+            "id": 12,
+            "nombre": "2do trimestre",
+            "quincenas": [
+              {"id": 121, "nombre": "1ª quincena"},
+              {"id": 122, "nombre": "2ª quincena"},
+              {"id": 123, "nombre": "3ª quincena"},
+              {"id": 124, "nombre": "4ª quincena"},
+              {"id": 125, "nombre": "5ª quincena"},
+              {"id": 126, "nombre": "6ª quincena"}
+            ]
+          },
+          {
+            "id": 13,
+            "nombre": "3er trimestre",
+            "quincenas": [
+              {"id": 131, "nombre": "1ª quincena"},
+              {"id": 132, "nombre": "2ª quincena"},
+              {"id": 133, "nombre": "3ª quincena"},
+              {"id": 134, "nombre": "4ª quincena"},
+              {"id": 135, "nombre": "5ª quincena"},
+              {"id": 136, "nombre": "6ª quincena"}
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "nombre": "Mensual",
+        "trimestres": [
+          {
+            "id": 21,
+            "nombre": "1er trimestre",
+            "meses": [
+              {"id": 211, "nombre": "1º mes"},
+              {"id": 212, "nombre": "2º mes"},
+              {"id": 213, "nombre": "3º mes"}
+            ]
+          },
+          {
+            "id": 22,
+            "nombre": "2do trimestre",
+            "meses": [
+              {"id": 221, "nombre": "1º mes"},
+              {"id": 222, "nombre": "2º mes"},
+              {"id": 223, "nombre": "3º mes"}
+            ]
+          },
+          {
+            "id": 23,
+            "nombre": "3er trimestre",
+            "meses": [
+              {"id": 231, "nombre": "1º mes"},
+              {"id": 232, "nombre": "2º mes"},
+              {"id": 233, "nombre": "3º mes"}
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "nombre": "2 por trimestre",
+        "trimestres": [
+          {
+            "id": 31,
+            "nombre": "1er trimestre",
+            "bloques": [
+              {"id": 311, "nombre": "1ª"},
+              {"id": 312, "nombre": "2ª"}
+            ]
+          },
+          {
+            "id": 32,
+            "nombre": "2do trimestre",
+            "bloques": [
+              {"id": 321, "nombre": "1ª"},
+              {"id": 322, "nombre": "2ª"}
+            ]
+          },
+          {
+            "id": 33,
+            "nombre": "3er trimestre",
+            "bloques": [
+              {"id": 331, "nombre": "1ª"},
+              {"id": 332, "nombre": "2ª"}
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "nombre": "1 por trimestre",
+        "trimestres": [
+          {"id": 41, "nombre": "1er trimestre"},
+          {"id": 42, "nombre": "2do trimestre"},
+          {"id": 43, "nombre": "3er trimestre"}
+        ]
+      }
+    ]
+  }
+  

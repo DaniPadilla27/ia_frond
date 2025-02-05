@@ -1,0 +1,221 @@
+<div class="min-h-screen flex bg-gray-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-[#5ab2da] text-white p-6 space-y-6 shadow-md">
+    <h2 class="text-2xl font-bold">Perfil Docente</h2>
+    <nav>
+      <ul class="space-y-4">
+        <li><a href="#" class="block hover:text-gray-200">Inicio</a></li>
+        <li><a href="#" class="block hover:text-gray-200">Datos Personales</a></li>
+        <li><a href="#" class="block hover:text-gray-200">Materias Asignadas</a></li>
+        <li><a href="#" class="block hover:text-gray-200">Horarios</a></li>
+        <li><a href="#" class="block hover:text-gray-200">Configuración</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="bg-[#5ab2da] p-6 text-white">
+        <h2 class="text-2xl font-bold">Datos del Plantel</h2>
+        <p class="text-white/80 text-sm mt-1">Formulario de diagnóstico</p>
+      </div>
+      <div class="p-6">
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <h3 class="text-xl font-semibold text-gray-700">Información del Plantel</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+            <div class="bg-white p-3 rounded shadow">
+              <p class="text-gray-600 text-sm"><strong>Nombre:</strong></p>
+              <p class="text-gray-800 font-medium">{{ plantel.nombre }}</p>
+            </div>
+            <div class="bg-white p-3 rounded shadow">
+              <p class="text-gray-600 text-sm"><strong>Dirección:</strong></p>
+              <p class="text-gray-800 font-medium">{{ plantel.direccion.calle }}</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+<!-- Planeación de Actividades -->
+<!-- Contenedor Principal -->
+<div class="p-4 max-w-5xl mx-auto grid grid-cols-2 gap-6">
+  <!-- Sección de Selección -->
+  <div class="col-span-2">
+    <h2 class="text-2xl font-bold mb-4 text-center">📌 Planeación de Actividades</h2>
+
+    <!-- Categorías -->
+    <h3 class="text-lg font-semibold mb-2">Selecciona una categoría:</h3>
+    <div class="grid grid-cols-2 gap-4">
+      <button 
+        *ngFor="let categoria of categorias" 
+        (click)="seleccionarCategoria(categoria.id)" 
+        class="p-4 rounded-lg shadow-md text-white text-center transition"
+        [ngStyle]="{ 'background-color': categoria.color }"
+      >
+        {{ categoria.nombre }}
+      </button>
+    </div>
+
+    <!-- Subtemas (se muestran solo si hay una categoría seleccionada) -->
+    <div *ngIf="subtemasFiltrados.length > 0" class="mt-6">
+      <h3 class="text-lg font-semibold mb-2">Selecciona un subtema:</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <button 
+          *ngFor="let subtema of subtemasFiltrados" 
+          (click)="seleccionarSubtema(subtema)" 
+          class="p-4 rounded-lg shadow-md text-white text-center transition"
+          [ngStyle]="{ 'background-color': categoriaSeleccionada?.color }"
+        >
+          {{ subtema.nombre }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Panel lateral de Selección -->
+</div>
+
+
+<div class="proceso-container" *ngIf="procesoAprendizaje">
+  <h2 
+    class="p-3 text-white text-center rounded-md"
+    [ngStyle]="{ 'background-color': categoriaSeleccionada?.color }"
+  >
+    {{ procesoAprendizaje.nombre_categoria }} - {{ procesoAprendizaje.nombre_subtema }}
+  </h2>
+
+  <div class="niveles-container">
+    <div *ngFor="let nivel of procesoAprendizaje.niveles" class="nivel-card border shadow-md rounded-md overflow-hidden">
+      <div 
+        class="nivel-header p-2 text-white rounded-t-md font-semibold"
+        [ngStyle]="{ 'background-color': categoriaSeleccionada?.color }"
+      >
+        <h3>🔹 Nivel {{ nivel.grado }}</h3>
+      </div>
+      <div class="nivel-content p-4 bg-gray-100">
+        <ul class="list-disc pl-5 text-gray-700">
+          <li *ngFor="let punto of transformarDescripcion(nivel.descripcion)"
+              (click)="seleccionarPunto(punto)" 
+              [class.selected]="punto === puntoSeleccionado"
+              class="cursor-pointer hover:bg-gray-200 p-2 rounded-md">
+            {{ punto }}.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección para mostrar el punto seleccionado -->
+  <div *ngIf="puntoSeleccionado" class="punto-seleccionado bg-blue-100 p-4 mt-4 border-l-4 border-blue-500">
+    <h3 class="text-blue-700 font-semibold">Punto Seleccionado:</h3>
+    <p class="text-gray-800">{{ puntoSeleccionado }}.</p>
+  </div>
+</div>
+
+
+
+
+<div *ngIf="!procesoAprendizaje" class="warning-message">
+  <p>Seleccione una categoría y un subtema para ver los niveles de aprendizaje.</p>
+</div>
+
+
+
+<!-- Nueva sección: Elección de Metodología -->
+<div class="metodologia-container mt-6">
+  <h3 class="text-lg font-semibold mb-2">📚 Elección de la metodología a trabajar</h3>
+  <p>En esta fase, el docente elige de entre las siguientes metodologías:</p>
+  <ul class="list-disc pl-5 text-gray-700 mt-2">
+    <li *ngFor="let metodologia of metodologias"
+        (click)="seleccionarMetodologia(metodologia)" 
+        [class.selected]="metodologia === metodologiaSeleccionada"
+        class="cursor-pointer hover:bg-gray-200 p-2 rounded-md">
+      {{ metodologia }}
+    </li>
+  </ul>
+</div>
+
+<!-- Sección para mostrar la metodología seleccionada -->
+<div *ngIf="metodologiaSeleccionada" class="metodologia-seleccionada bg-green-100 p-4 mt-4 border-l-4 border-green-500">
+  <h3 class="text-green-700 font-semibold">Metodología Seleccionada:</h3>
+  <p class="text-gray-800">{{ metodologiaSeleccionada }}</p>
+</div>
+
+
+
+ <!-- Nueva sección: Selección de Instrumento de Evaluación -->
+ <div class="instrumento-container mt-6">
+  <h3 class="text-lg font-semibold mb-2">📊 Selección de instrumento de evaluación</h3>
+  <p>El docente selecciona el tipo de evaluación a implementar:</p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+    <div *ngFor="let instrumento of instrumentosEvaluacion"
+         (click)="seleccionarInstrumento(instrumento)" 
+         [class.selected]="instrumento === instrumentoSeleccionado"
+         class="card shadow-md p-4 rounded-md cursor-pointer hover:bg-gray-100 transition">
+      {{ instrumento }}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="instrumentoSeleccionado" class="instrumento-seleccionado bg-purple-100 p-4 mt-4 border-l-4 border-purple-500">
+  <h3 class="text-purple-700 font-semibold">Instrumento de Evaluación Seleccionado:</h3>
+  <p class="text-gray-800">{{ instrumentoSeleccionado }}</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <!-- Dropdown para seleccionar la periodicidad -->
+<select [(ngModel)]="selectedPeriodo" (change)="seleccionarPeriodicidad($event)">
+  <option value="" disabled selected>Selecciona una periodicidad</option>
+  <option *ngFor="let opcion of opcionesPeriodicidad" [ngValue]="opcion">
+    {{ opcion.nombre }}
+  </option>
+</select>
+
+<!-- Mostrar trimestres y periodos seleccionados -->
+<div *ngIf="selectedPeriodo">
+  <h3>{{ selectedPeriodo.nombre }}</h3>
+  <div *ngFor="let trimestre of selectedPeriodo.trimestres" class="trimestre-card">
+    <h4>📆 {{ trimestre.nombre }}</h4>
+    <div *ngIf="trimestre.quincenas">
+      <p *ngFor="let quincena of trimestre.quincenas" class="periodo">
+        {{ quincena.nombre }}
+      </p>
+    </div>
+    <div *ngIf="trimestre.meses">
+      <p *ngFor="let mes of trimestre.meses" class="periodo">
+        {{ mes.nombre }}
+      </p>
+    </div>
+    <div *ngIf="trimestre.bloques">
+      <p *ngFor="let bloque of trimestre.bloques" class="periodo">
+        {{ bloque.nombre }}
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+    </div>
+  </main>
+</div>
