@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // <-- Important: Add this
-import { PlantelComponent } from '../app/private/plantel/plantel.component'; // <-- Important: Add this
+import { PlantelComponent } from '../app/private/plantel/plantel.component';
+// import { PromtComponent } from './private/promt/promt.component'; // <-- Important: Add this
 
 @NgModule({
   declarations: [PlantelComponent],

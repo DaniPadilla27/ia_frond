@@ -17,7 +17,6 @@ import { Router, RouterModule } from '@angular/router';
           Plataforma Educativa
         </a>
       </div>
-      
       <!-- Menú de navegación -->
       <nav class="flex flex-col space-y-4">
         <a 
@@ -39,6 +38,14 @@ import { Router, RouterModule } from '@angular/router';
         >
           Diagnóstico 2
         </a>
+        <a 
+  routerLink="/promt"
+  class="block py-2 px-4 hover:bg-[#4a90c3] rounded transition-colors flex items-center gap-2"
+>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT" class="w-5 h-5">
+  Diagnóstico 3
+</a>
+
       </nav>
       
       <!-- Botón para cerrar sesión -->

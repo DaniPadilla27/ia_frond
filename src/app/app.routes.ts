@@ -21,6 +21,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./private/diagnostico2/diagnostico2.component').then((m) => m.Diagnostico2Component),
   },
+  {
+    path: 'promt',
+    loadComponent: () =>
+      import('./private/promt/promt.component').then((m) => m.PromtComponent),
+  },
   // Redirige la ruta raíz a 'login'
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
