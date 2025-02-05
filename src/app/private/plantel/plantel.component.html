@@ -1,46 +1,80 @@
 <div class="min-h-screen flex">
+  <!-- Componente del menú lateral -->
   <app-header></app-header>
 
-  <div class="flex-1 bg-gray-40 ">
-    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-      <div class="bg-[#5ab2da] p-4">
-        <h2 class="text-xl font-bold text-white">Datos del plantel</h2>
-        <p class="text-white/90 text-sm mt-1">Formulario de diagnóstico</p>
+  <!-- Área principal del formulario -->
+  <div class="flex-1 bg-gray-100 p-6">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <!-- Encabezado del formulario con icono -->
+      <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <!-- Icono de edificio escolar -->
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-2a4 4 0 014-4h10a4 4 0 014 4v2" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 10l5-5 5 5M12 15v6" />
+        </svg>
+        <div>
+          <h2 class="text-2xl font-bold text-white">Datos del Plantel</h2>
+          <p class="text-white/90 text-sm">Formulario de diagnóstico</p>
+        </div>
       </div>
 
-      <form class="p-4 space-y-4" (ngSubmit)="onUpdate()">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Formulario -->
+      <form class="p-6 space-y-6" (ngSubmit)="onUpdate()">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Columna Izquierda -->
-          <div class="space-y-3">
+          <div class="space-y-5">
+            <!-- Nombre de la escuela -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Nombre de la escuela</label>
+              <label class="block text-sm font-medium text-gray-700 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <!-- Icono de institución -->
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 1.657-1.343 3-3 3S6 12.657 6 11s1.343-3 3-3 3 1.343 3 3z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 12h-4m-6 0H2" />
+                </svg>
+                Nombre de la escuela
+              </label>
               <input
                 type="text"
                 [(ngModel)]="plantel.nombre"
                 name="nombre"
                 required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
               />
             </div>
 
+            <!-- Clave de centro de trabajo -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Clave de centro de trabajo</label>
+              <label class="block text-sm font-medium text-gray-700 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <!-- Icono de llave o identificación -->
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 00-8 0v4H5a2 2 0 00-2 2v7a2 2 0 002 2h14a2 2 0 002-2v-7a2 2 0 00-2-2h-3V7z" />
+                </svg>
+                Clave de centro de trabajo
+              </label>
               <input
                 type="text"
                 [(ngModel)]="plantel.clave_centro_trabajo"
                 name="clave_centro_trabajo"
                 required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
               />
             </div>
 
+            <!-- Nivel educativo -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Nivel educativo</label>
+              <label class="block text-sm font-medium text-gray-700 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <!-- Icono de diploma -->
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.84 6.77L12 21l-7-3.652a12.083 12.083 0 01.84-6.77L12 14z" />
+                </svg>
+                Nivel educativo
+              </label>
               <select
                 [(ngModel)]="plantel.nivel_educativo"
                 name="nivel_educativo"
                 required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
               >
                 <option value="">Seleccione...</option>
                 <option value="primaria">Primaria</option>
@@ -49,117 +83,200 @@
               </select>
             </div>
 
+            <!-- Nombre del grado -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Nombre del grado</label>
+              <label class="block text-sm font-medium text-gray-700 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <!-- Icono de grado -->
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16h6" />
+                </svg>
+                Nombre del grado
+              </label>
               <input
                 type="text"
                 [(ngModel)]="plantel.grado.nombre"
                 name="grado_nombre"
                 required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
               />
             </div>
 
+            <!-- Número de Docentes -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Número de Docentes</label>
+              <label class="block text-sm font-medium text-gray-700 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <!-- Icono de grupo -->
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-1" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20H4v-2a4 4 0 014-4h1" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4h10v4H7z" />
+                </svg>
+                Número de Docentes
+              </label>
               <input
                 type="number"
                 [(ngModel)]="plantel.num_docentes"
                 name="num_docentes"
                 required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
               />
             </div>
 
+            <!-- Número de Alumnos -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Número de Alumnos</label>
+              <label class="block text-sm font-medium text-gray-700 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <!-- Icono de estudiantes -->
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-1" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20H4v-2a4 4 0 014-4h1" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v8" />
+                </svg>
+                Número de Alumnos
+              </label>
               <input
                 type="number"
                 [(ngModel)]="plantel.num_alumnos"
                 name="num_alumnos"
                 required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
               />
             </div>
           </div>
 
           <!-- Columna Derecha -->
-          <div class="space-y-3">
-            <div class="grid grid-cols-2 gap-3">
+          <div class="space-y-5">
+            <!-- Dirección: Calle y Número -->
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Calle -->
               <div>
-                <label class="block text-sm font-medium text-gray-700">Calle</label>
+                <label class="block text-sm font-medium text-gray-700 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <!-- Icono de ubicación -->
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7l9-4 9 4-9 4-9-4z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10l-9 4-9-4" />
+                  </svg>
+                  Calle
+                </label>
                 <input
                   type="text"
                   [(ngModel)]="plantel.direccion.calle"
                   name="calle"
                   required
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
                 />
               </div>
+              <!-- Número -->
               <div>
-                <label class="block text-sm font-medium text-gray-700">Número</label>
+                <label class="block text-sm font-medium text-gray-700 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <!-- Icono de numeral -->
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3 0 1.657 1.343 3 3 3s3-1.343 3-3c0-1.657-1.343-3-3-3z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12h2m16 0h2" />
+                  </svg>
+                  Número
+                </label>
                 <input
                   type="text"
                   [(ngModel)]="plantel.direccion.numero"
                   name="numero"
                   required
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
                 />
               </div>
             </div>
 
+            <!-- Colonia -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Colonia</label>
+              <label class="block text-sm font-medium text-gray-700 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <!-- Icono de mapa -->
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21h8M12 17v4" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3a7 7 0 00-7 7v4a7 7 0 0014 0V10a7 7 0 00-7-7z" />
+                </svg>
+                Colonia
+              </label>
               <input
                 type="text"
                 [(ngModel)]="plantel.direccion.colonia"
                 name="colonia"
                 required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
               />
             </div>
 
+            <!-- Localidad -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Localidad</label>
+              <label class="block text-sm font-medium text-gray-700 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <!-- Icono similar a ubicación -->
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 12h-4m-6 0H2" />
+                </svg>
+                Localidad
+              </label>
               <input
                 type="text"
                 [(ngModel)]="plantel.direccion.localidad"
                 name="localidad"
                 required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
               />
             </div>
 
+            <!-- Municipio -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Municipio</label>
+              <label class="block text-sm font-medium text-gray-700 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <!-- Icono de mapa o dirección -->
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7l9-4 9 4-9 4-9-4z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10l-9 4-9-4" />
+                </svg>
+                Municipio
+              </label>
               <input
                 type="text"
                 [(ngModel)]="plantel.direccion.municipio"
                 name="municipio"
                 required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
               />
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <!-- Estado y País -->
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Estado -->
               <div>
-                <label class="block text-sm font-medium text-gray-700">Estado</label>
+                <label class="block text-sm font-medium text-gray-700 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <!-- Icono de edificio -->
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v4H3V4z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18v8a1 1 0 01-1 1H4a1 1 0 01-1-1v-8z" />
+                  </svg>
+                  Estado
+                </label>
                 <input
                   type="text"
                   [(ngModel)]="plantel.direccion.estado"
                   name="estado"
                   required
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
                 />
               </div>
+              <!-- País -->
               <div>
-                <label class="block text-sm font-medium text-gray-700">País</label>
+                <label class="block text-sm font-medium text-gray-700 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <!-- Icono de globo terráqueo -->
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C8.686 2 6 4.686 6 8c0 3.314 2.686 6 6 6s6-2.686 6-6c0-3.314-2.686-6-6-6z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 20a10 10 0 0116-8" />
+                  </svg>
+                  País
+                </label>
                 <input
                   type="text"
                   [(ngModel)]="plantel.direccion.pais"
                   name="pais"
                   required
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
                 />
               </div>
             </div>
@@ -167,14 +284,21 @@
         </div>
 
         <!-- Sección de selecciones -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Modalidad -->
           <div>
-            <label class="block text-sm font-medium text-gray-700">Modalidad</label>
+            <label class="block text-sm font-medium text-gray-700 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- Icono de lista -->
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16h8M8 12h8m-8-4h8" />
+              </svg>
+              Modalidad
+            </label>
             <select
               [(ngModel)]="plantel.modalidad"
               name="modalidad"
               required
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
             >
               <option value="">Seleccione...</option>
               <option value="general">General</option>
@@ -183,13 +307,20 @@
             </select>
           </div>
 
+          <!-- Organización -->
           <div>
-            <label class="block text-sm font-medium text-gray-700">Organización</label>
+            <label class="block text-sm font-medium text-gray-700 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- Icono de menú horizontal -->
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              Organización
+            </label>
             <select
               [(ngModel)]="plantel.organizacion"
               name="organizacion"
               required
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
             >
               <option value="">Seleccione...</option>
               <option value="completa">Completa</option>
@@ -197,13 +328,21 @@
             </select>
           </div>
 
+          <!-- Sostenimiento -->
           <div>
-            <label class="block text-sm font-medium text-gray-700">Sostenimiento</label>
+            <label class="block text-sm font-medium text-gray-700 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- Icono de ojo (para representar supervisión o control) -->
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12a10 10 0 0120 0" />
+              </svg>
+              Sostenimiento
+            </label>
             <select
               [(ngModel)]="plantel.sostenimiento"
               name="sostenimiento"
               required
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#5ab2da] focus:ring focus:ring-[#5ab2da] text-sm"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 text-sm"
             >
               <option value="">Seleccione...</option>
               <option value="público">Público</option>
@@ -212,11 +351,11 @@
           </div>
         </div>
 
-        <!-- Botones -->
-        <div class="pt-4 flex gap-3">
+        <!-- Botón de envío -->
+        <div class="pt-6 flex justify-end">
           <button
             type="submit"
-            class="w-full bg-[#5ab2da] hover:bg-[#4a9ec4] text-white font-medium py-2 rounded-md transition-colors text-sm"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-md transition-colors text-sm"
           >
             Actualizar Escuela
           </button>

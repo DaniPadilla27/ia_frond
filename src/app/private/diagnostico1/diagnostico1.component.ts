@@ -22,6 +22,7 @@ declare module "jspdf" {
 export class Diagnostico1Component {
   // URL base de la API para los diagnósticos
   apiUrl = 'http://localhost:3000/api';
+  
 
   // Estructura de categorías e indicadores (los usuarios modifican solo calificación y observaciones)
   categorias = [
@@ -68,6 +69,7 @@ export class Diagnostico1Component {
   // Propiedad para mostrar el estado de carga y el resultado del diagnóstico generado
   loading = false;
   diagnostico1Text = '';
+  
 
   constructor(private http: HttpClient) {}
 

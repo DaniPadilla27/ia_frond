@@ -80,6 +80,8 @@ export class Diagnostico2Component {
       ]
     }
   ];
+  diagnostico1Text: string = '';
+
 
   constructor(private http: HttpClient) {}
 
